@@ -514,64 +514,6 @@
       </tags>
   </entry>
   <entry>
-    <title>从安卓手机中拉出Apk</title>
-    <url>/archives/6f7bfefe.html</url>
-    <content><![CDATA[<p>如何快速将安装到手机中的应用的Apk文件快速拿出来，使用下面几个ADB命令即可轻松做到。</p>
-<span id="more"></span>
-
-<h6 id="查看是否链接到手机"><a href="#查看是否链接到手机" class="headerlink" title="查看是否链接到手机"></a>查看是否链接到手机</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adb devices</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330225045870-16486596140232.png" alt="image20220330225045870"></p>
-<h6 id="进入手机的shell层"><a href="#进入手机的shell层" class="headerlink" title="进入手机的shell层"></a>进入手机的shell层</h6><ul>
-<li>单一设备链接时</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adb shell</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330225557489.png" alt="image-20220330225557489"></p>
-<ul>
-<li>多设备链接时</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adb -s 手机设备序列号 shell</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330225818186.png" alt="image-20220330225818186"></p>
-<h6 id="查看安装软件的包名"><a href="#查看安装软件的包名" class="headerlink" title="查看安装软件的包名"></a>查看安装软件的包名</h6><ul>
-<li>查看所有软件的包名</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm list packages</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330230040400.png" alt="image-20220330230040400"></p>
-<ul>
-<li>根据关键字查找包名</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm list packages | grep oneplus</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330230331065.png" alt="image-20220330230331065"></p>
-<h6 id="查看安装包的位置"><a href="#查看安装包的位置" class="headerlink" title="查看安装包的位置"></a>查看安装包的位置</h6><ul>
-<li>查看所有安装包位置</li>
-</ul>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm list packages -f</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330230631200.png" alt="image-20220330230631200"></p>
-<ul>
-<li>查看符合包名要求的安装包位置</li>
-</ul>
-<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">pm list packages -f <span class="string">| grep tencent</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330231047522.png" alt="image-20220330231047522"></p>
-<h6 id="将Apk拉到PC本地"><a href="#将Apk拉到PC本地" class="headerlink" title="将Apk拉到PC本地"></a>将Apk拉到PC本地</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exit</span><br><span class="line">adb pull 上一步获取到的位置信息 PC存储位置(相对于命令行)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330231534430.png" alt="image-20220330231534430"></p>
-<p>PC 端文件(用户名文件下)</p>
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330231658094.png" alt="image-20220330231658094"></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>常见古英语单词对照</title>
     <url>/archives/db3cdaed.html</url>
     <content><![CDATA[<p>读十四行诗必备~</p>
@@ -642,5 +584,63 @@
 </tr>
 </tbody></table>
 ]]></content>
+  </entry>
+  <entry>
+    <title>从安卓手机中拉出Apk</title>
+    <url>/archives/6f7bfefe.html</url>
+    <content><![CDATA[<p>如何快速将安装到手机中的应用的Apk文件快速拿出来，使用下面几个ADB命令即可轻松做到。</p>
+<span id="more"></span>
+
+<h6 id="查看是否链接到手机"><a href="#查看是否链接到手机" class="headerlink" title="查看是否链接到手机"></a>查看是否链接到手机</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adb devices</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330225045870-16486596140232.png" alt="image20220330225045870"></p>
+<h6 id="进入手机的shell层"><a href="#进入手机的shell层" class="headerlink" title="进入手机的shell层"></a>进入手机的shell层</h6><ul>
+<li>单一设备链接时</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adb shell</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330225557489.png" alt="image-20220330225557489"></p>
+<ul>
+<li>多设备链接时</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">adb -s 手机设备序列号 shell</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330225818186.png" alt="image-20220330225818186"></p>
+<h6 id="查看安装软件的包名"><a href="#查看安装软件的包名" class="headerlink" title="查看安装软件的包名"></a>查看安装软件的包名</h6><ul>
+<li>查看所有软件的包名</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm list packages</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330230040400.png" alt="image-20220330230040400"></p>
+<ul>
+<li>根据关键字查找包名</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm list packages | grep oneplus</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330230331065.png" alt="image-20220330230331065"></p>
+<h6 id="查看安装包的位置"><a href="#查看安装包的位置" class="headerlink" title="查看安装包的位置"></a>查看安装包的位置</h6><ul>
+<li>查看所有安装包位置</li>
+</ul>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm list packages -f</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330230631200.png" alt="image-20220330230631200"></p>
+<ul>
+<li>查看符合包名要求的安装包位置</li>
+</ul>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">pm list packages -f <span class="string">| grep tencent</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330231047522.png" alt="image-20220330231047522"></p>
+<h6 id="将Apk拉到PC本地"><a href="#将Apk拉到PC本地" class="headerlink" title="将Apk拉到PC本地"></a>将Apk拉到PC本地</h6><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exit</span><br><span class="line">adb pull 上一步获取到的位置信息 PC存储位置(相对于命令行)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330231534430.png" alt="image-20220330231534430"></p>
+<p>PC 端文件(用户名文件下)</p>
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/image-20220330231658094.png" alt="image-20220330231658094"></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
   </entry>
 </search>
