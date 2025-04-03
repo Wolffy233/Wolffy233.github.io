@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Git最佳实践：Git Flow的使用</title>
+    <url>/archives/a7060461.html</url>
+    <content><![CDATA[<p>代码管理需要一个清晰的流程和规范</p>
+<span id="more"></span>
+
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/git-flow-navigation.png" alt="GitFlowNavigation"></p>
+<h2 id="Git-Flow-常用分支"><a href="#Git-Flow-常用分支" class="headerlink" title="Git Flow 常用分支"></a>Git Flow 常用分支</h2><ul>
+<li>Production 分支</li>
+</ul>
+<p>也就是我们常用的 master 分支，用来发布到生产环境的代码；这个分支只能从其他分支合并，不能在这个分支直接修改代码。</p>
+<ul>
+<li>Develop 分支</li>
+</ul>
+<p>这个分支是我们的主开发分支，包含所有要发布到下一个Release的代码，这个这个合并其他分支，比如Feature分支</p>
+<ul>
+<li>Feature 分支</li>
+</ul>
+<p>这个分支主要用来开发一个新的功能，一旦开发完成，我们合并回Develop分支进入下一个Release</p>
+<ul>
+<li>Release 分支</li>
+</ul>
+<p>当你需要发布一个新Release的时候，我们基于Develop分支创建一个Release分支，完成Release后，我们合并Master和Develop分支</p>
+<ul>
+<li>Hotfix分支</li>
+</ul>
+<p>当我们再Production发现新的Bug时，我们需要创建一个Hotfix，完成Hotfix后，我们合并回master和Develop分支，所以Hotfix的改动会进入下一个Release</p>
+<h2 id="Git-Flow如何工作"><a href="#Git-Flow如何工作" class="headerlink" title="Git Flow如何工作"></a>Git Flow如何工作</h2><h3 id="初始分支-master"><a href="#初始分支-master" class="headerlink" title="初始分支(master)"></a>初始分支(master)</h3><p>所有再master分支上的Commit应该Tag</p>
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/git-workflow-release-cycle.png" alt="img"></p>
+<h3 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h3><p>分支名feature/*</p>
+<p>Feature分支做完后，必须合并回Develop分支，合并完分支后一般会删掉这个Feature分支。</p>
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/git-workflow-release-cycle-2feature.png" alt="img"></p>
+<h3 id="Release分支"><a href="#Release分支" class="headerlink" title="Release分支"></a>Release分支</h3><p>分支名release/*</p>
+<p>Release分支基于Develop分支创建，打完Release分支后，我们可以在这个Release分支上测试，修改Bug等。同时，其他开发人员可以基于开发新的Feature发布Release分支时，合并Release到Master和Develop分支，同时在Master分支上打个Tag记住Release版本号，然后就可以删除Release分支了。</p>
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/o_git-workflow-release-cycle-3release.png" alt="img"></p>
+<h3 id="维护Hotfix"><a href="#维护Hotfix" class="headerlink" title="维护Hotfix"></a>维护Hotfix</h3><p>分支名hotfix/*</p>
+<p>hotfix分支基于Master分支创建，开发完成后要合并会Master和Develop分支，同时在Master上打一个Tag。</p>
+<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/o_git-workflow-release-cycle-4maintenance.png" alt="img"></p>
+<h3 id="Git-Flow代码示例"><a href="#Git-Flow代码示例" class="headerlink" title="Git Flow代码示例"></a>Git Flow代码示例</h3><ol>
+<li>创建develop分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git branch develop</span><br><span class="line">git push -u origin devlop</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>开始新Feature开发</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -b some-feature develop</span><br><span class="line"><span class="meta">#</span><span class="bash"> Optionally, push branch to origin:</span></span><br><span class="line">git push -u origin some-feature</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 做一些改动</span></span><br><span class="line">git status</span><br><span class="line">git add some-file</span><br><span class="line">git commit</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>完成Feature</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull origin develop</span><br><span class="line">git checkout develop</span><br><span class="line">git merge --no--ff some-feature</span><br><span class="line">git push origin develop</span><br><span class="line"></span><br><span class="line">git branch -d some-feature</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If you pushed branch to origin:</span></span><br><span class="line">git push origin --delete some-feature</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>开始Release</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -b release-0.1.0 develop</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Optional: Bump version number, commit</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Prepare release, commit</span>		</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>完成Release</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no--ff release-0.1.0</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git checkout develop</span><br><span class="line">git merge --no--ff release-0.1.0</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git branch -d release-0.1.0</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If you pushed branch to origin:</span></span><br><span class="line">git push origin --delete release-0.1.0</span><br><span class="line"></span><br><span class="line">git tag -a v0.1.0 master</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>开始Hotfix</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -b hotfix-0.1.1 master</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>完成Hotfix</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no--ff hotfix-0.1.1</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git checkout develop</span><br><span class="line">git merge --no--ff hotfix-0.1.1</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git branch -d hotfix-0.1.1</span><br><span class="line"></span><br><span class="line">git tag -a v0.1.1 master</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>项目实践</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java &amp; Android代码规范指南</title>
     <url>/archives/abf51d21.html</url>
     <content><![CDATA[<p>本文为<a href="https://google.github.io/styleguide/javaguide.html">Google Java 风格指南</a>的汉语翻译。无论你是个人开发还是团队协同开发，一个良好的代码规范，能够在项目当中发挥举足轻重的作用；它不仅能使你们的开发更加高效，而且还会减少BUG产生的几率，增强代码可维护性及稳定性。</p>
@@ -430,87 +511,6 @@
       </categories>
       <tags>
         <tag>Code Style</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git最佳实践：Git Flow的使用</title>
-    <url>/archives/a7060461.html</url>
-    <content><![CDATA[<p>代码管理需要一个清晰的流程和规范</p>
-<span id="more"></span>
-
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/git-flow-navigation.png" alt="GitFlowNavigation"></p>
-<h2 id="Git-Flow-常用分支"><a href="#Git-Flow-常用分支" class="headerlink" title="Git Flow 常用分支"></a>Git Flow 常用分支</h2><ul>
-<li>Production 分支</li>
-</ul>
-<p>也就是我们常用的 master 分支，用来发布到生产环境的代码；这个分支只能从其他分支合并，不能在这个分支直接修改代码。</p>
-<ul>
-<li>Develop 分支</li>
-</ul>
-<p>这个分支是我们的主开发分支，包含所有要发布到下一个Release的代码，这个这个合并其他分支，比如Feature分支</p>
-<ul>
-<li>Feature 分支</li>
-</ul>
-<p>这个分支主要用来开发一个新的功能，一旦开发完成，我们合并回Develop分支进入下一个Release</p>
-<ul>
-<li>Release 分支</li>
-</ul>
-<p>当你需要发布一个新Release的时候，我们基于Develop分支创建一个Release分支，完成Release后，我们合并Master和Develop分支</p>
-<ul>
-<li>Hotfix分支</li>
-</ul>
-<p>当我们再Production发现新的Bug时，我们需要创建一个Hotfix，完成Hotfix后，我们合并回master和Develop分支，所以Hotfix的改动会进入下一个Release</p>
-<h2 id="Git-Flow如何工作"><a href="#Git-Flow如何工作" class="headerlink" title="Git Flow如何工作"></a>Git Flow如何工作</h2><h3 id="初始分支-master"><a href="#初始分支-master" class="headerlink" title="初始分支(master)"></a>初始分支(master)</h3><p>所有再master分支上的Commit应该Tag</p>
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/git-workflow-release-cycle.png" alt="img"></p>
-<h3 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h3><p>分支名feature/*</p>
-<p>Feature分支做完后，必须合并回Develop分支，合并完分支后一般会删掉这个Feature分支。</p>
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/git-workflow-release-cycle-2feature.png" alt="img"></p>
-<h3 id="Release分支"><a href="#Release分支" class="headerlink" title="Release分支"></a>Release分支</h3><p>分支名release/*</p>
-<p>Release分支基于Develop分支创建，打完Release分支后，我们可以在这个Release分支上测试，修改Bug等。同时，其他开发人员可以基于开发新的Feature发布Release分支时，合并Release到Master和Develop分支，同时在Master分支上打个Tag记住Release版本号，然后就可以删除Release分支了。</p>
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/o_git-workflow-release-cycle-3release.png" alt="img"></p>
-<h3 id="维护Hotfix"><a href="#维护Hotfix" class="headerlink" title="维护Hotfix"></a>维护Hotfix</h3><p>分支名hotfix/*</p>
-<p>hotfix分支基于Master分支创建，开发完成后要合并会Master和Develop分支，同时在Master上打一个Tag。</p>
-<p><img src="https://raw.githubusercontent.com/boatImpish/BlogImage/master/img/o_git-workflow-release-cycle-4maintenance.png" alt="img"></p>
-<h3 id="Git-Flow代码示例"><a href="#Git-Flow代码示例" class="headerlink" title="Git Flow代码示例"></a>Git Flow代码示例</h3><ol>
-<li>创建develop分支</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git branch develop</span><br><span class="line">git push -u origin devlop</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>开始新Feature开发</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -b some-feature develop</span><br><span class="line"><span class="meta">#</span><span class="bash"> Optionally, push branch to origin:</span></span><br><span class="line">git push -u origin some-feature</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 做一些改动</span></span><br><span class="line">git status</span><br><span class="line">git add some-file</span><br><span class="line">git commit</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>完成Feature</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git pull origin develop</span><br><span class="line">git checkout develop</span><br><span class="line">git merge --no--ff some-feature</span><br><span class="line">git push origin develop</span><br><span class="line"></span><br><span class="line">git branch -d some-feature</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If you pushed branch to origin:</span></span><br><span class="line">git push origin --delete some-feature</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>开始Release</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -b release-0.1.0 develop</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Optional: Bump version number, commit</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Prepare release, commit</span>		</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>完成Release</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no--ff release-0.1.0</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git checkout develop</span><br><span class="line">git merge --no--ff release-0.1.0</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git branch -d release-0.1.0</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If you pushed branch to origin:</span></span><br><span class="line">git push origin --delete release-0.1.0</span><br><span class="line"></span><br><span class="line">git tag -a v0.1.0 master</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>开始Hotfix</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout -b hotfix-0.1.1 master</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>完成Hotfix</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git merge --no--ff hotfix-0.1.1</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git checkout develop</span><br><span class="line">git merge --no--ff hotfix-0.1.1</span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line">git branch -d hotfix-0.1.1</span><br><span class="line"></span><br><span class="line">git tag -a v0.1.1 master</span><br><span class="line">git push --tags</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>项目实践</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
