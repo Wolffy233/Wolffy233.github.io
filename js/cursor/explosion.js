@@ -1,6 +1,6 @@
 "use strict";
 
-// Cache the canvas element and its context
+// Catch the canvas element and its context
 const canvasEl = document.querySelector(".explosion");
 if (!canvasEl) {
     console.error("Canvas element not found.");
@@ -40,7 +40,7 @@ if (!canvasEl) {
             x,
             y,
             color: colors[anime.random(0, colors.length - 1)],
-            radius: anime.random(16, 32),
+            radius: anime.random(14, 28),
             endPos: setParticuleDirection({ x, y }),
             draw() {
                 ctx.beginPath();
@@ -52,28 +52,6 @@ if (!canvasEl) {
         return particule;
     }
 
-    // Create a circle object
-    function createCircle(x, y) {
-        const circle = {
-            x,
-            y,
-            color: "#F00",
-            radius: 0.1,
-            alpha: 0.5,
-            lineWidth: 6,
-            draw() {
-                ctx.globalAlpha = this.alpha;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-                ctx.lineWidth = this.lineWidth;
-                ctx.strokeStyle = this.color;
-                ctx.stroke();
-                ctx.globalAlpha = 1;
-            }
-        };
-        return circle;
-    }
-
     // Render particles
     function renderParticule(animation) {
         for (const particule of animation.animatables) {
@@ -83,7 +61,6 @@ if (!canvasEl) {
 
     // Animate particles
     function animateParticules(x, y) {
-        // const circle = createCircle(x, y);
         const particules = Array.from({ length: numberOfParticules }, () => createParticule(x, y));
 
         anime.timeline()
@@ -96,16 +73,6 @@ if (!canvasEl) {
                 easing: "easeOutExpo",
                 update: renderParticule
             });
-            // .add({
-            //     targets: circle,
-            //     radius: anime.random(80, 160),
-            //     lineWidth: 0,
-            //     alpha: { value: 0, easing: "linear", duration: anime.random(600, 800) },
-            //     duration: anime.random(1200, 1800),
-            //     easing: "easeOutExpo",
-            //     update: renderParticule,
-            //     offset: 0
-            // });
     }
 
     // Debounce function
