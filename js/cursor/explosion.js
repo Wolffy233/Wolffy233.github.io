@@ -1,7 +1,7 @@
 "use strict";
 
 // Cache the canvas element and its context
-const canvasEl = document.querySelector(".fireworks");
+const canvasEl = document.querySelector(".explosion");
 if (!canvasEl) {
     console.error("Canvas element not found.");
 } else {
@@ -83,7 +83,7 @@ if (!canvasEl) {
 
     // Animate particles
     function animateParticules(x, y) {
-        const circle = createCircle(x, y);
+        // const circle = createCircle(x, y);
         const particules = Array.from({ length: numberOfParticules }, () => createParticule(x, y));
 
         anime.timeline()
@@ -95,17 +95,17 @@ if (!canvasEl) {
                 duration: anime.random(1200, 1800),
                 easing: "easeOutExpo",
                 update: renderParticule
-            })
-            .add({
-                targets: circle,
-                radius: anime.random(80, 160),
-                lineWidth: 0,
-                alpha: { value: 0, easing: "linear", duration: anime.random(600, 800) },
-                duration: anime.random(1200, 1800),
-                easing: "easeOutExpo",
-                update: renderParticule,
-                offset: 0
             });
+            // .add({
+            //     targets: circle,
+            //     radius: anime.random(80, 160),
+            //     lineWidth: 0,
+            //     alpha: { value: 0, easing: "linear", duration: anime.random(600, 800) },
+            //     duration: anime.random(1200, 1800),
+            //     easing: "easeOutExpo",
+            //     update: renderParticule,
+            //     offset: 0
+            // });
     }
 
     // Debounce function
