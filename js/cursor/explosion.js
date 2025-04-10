@@ -78,7 +78,7 @@ if (!canvasEl) {
     // Debounce function
     function debounce(func, wait) {
         let timeout;
-        return function(...args) {
+        return function (...args) {
             clearTimeout(timeout);
             timeout = setTimeout(() => func.apply(this, args), wait);
         };
@@ -103,17 +103,39 @@ if (!canvasEl) {
 
     // Event listener for triggering animations
     document.addEventListener(tapEvent, (e) => {
-        if (
-            e.target.id !== "sidebar" &&
-            e.target.id !== "toggle-sidebar" &&
-            e.target.nodeName !== "A" &&
-            e.target.nodeName !== "IMG"
-        ) {
+        // 仅当非交互元素时触发爆炸
+        if (!isInteractiveElement(e.target)) {
             render.play();
             updateCoords(e);
             animateParticules(pointerX, pointerY);
         }
     }, false);
+
+    // 检查目标元素是否属于可跳转/交互元素
+    function isInteractiveElement(element) {
+        let current = element;
+        // 向上遍历DOM树检查各级元素
+        while (current && current !== document.documentElement) {
+            // 判断条件：标签名、ID、交互属性或组件类
+            if (
+                current.nodeName === 'A' || // 所有链接
+                current.nodeName === 'BUTTON' || // 按钮
+                current.nodeName === 'INPUT' || // 输入控件
+                current.nodeName === 'SELECT' || // 选择框
+                current.nodeName === 'TEXTAREA' || // 文本框
+                current.id === 'sidebar' || // 排除指定ID
+                current.id === 'toggle-sidebar' ||
+                current.href || // 有链接地址
+                current.onclick || // 内联点击事件
+                current.classList.contains('router-link') || // Vue路由组件
+                current.getAttribute('role') === 'button' // 按钮角色
+            ) {
+                return true; // 发现可交互元素
+            }
+            current = current.parentElement; // 继续检查父元素
+        }
+        return false; // 未找到可交互特征
+    }
 
     // Initialize canvas size and listen for resize events
     setCanvasSize();
