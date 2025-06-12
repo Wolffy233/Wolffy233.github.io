@@ -650,6 +650,14 @@ code.hljs {
 .code-container {
   position: relative;
 }
+.code-lang {
+  font-size: 40px;
+  line-height: 1;
+  opacity: 0.1;
+  pointer-events: none;
+  position: absolute;
+  right: 5px;
+}
 .copy-btn {
   color: #333;
   cursor: pointer;
@@ -1461,7 +1469,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #34d166;
+    background: #778f8a;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -2627,6 +2635,7 @@ ul.breadcrumb li:last-child {
 }
 .search-active {
   overflow: hidden;
+  margin-right: var(--dialog-scrollgutter, 0);
 }
 .search-pop-overlay {
   background: rgba(0,0,0,0);
